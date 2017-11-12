@@ -11,6 +11,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(BootstrapVue);
 
+require('./api/api.js').init();
+
 
 Vue.config.productionTip = false
 

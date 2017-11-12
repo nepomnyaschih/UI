@@ -1,8 +1,6 @@
 <template>
 <div>
 
-  <h2>Настройки</h2>
-
   <h3>Подключённые датчики</h3>
   <b-table striped hover :items="sensors"></b-table>
 
@@ -11,18 +9,14 @@
 
 <script>
 
-const sensors = [
-  { isActive: true,  age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-  { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-  { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-  { isActive: true,  age: 38, last_name: 'Carney' }
-];
+
+var api = require('../api/api.js');
 
 export default {
   name: 'Settings',
   data () {
     return {
-      sensors: sensors
+      sensors: api.getSensorsList()
     }
   }
 }
