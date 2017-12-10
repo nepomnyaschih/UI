@@ -1,7 +1,13 @@
 
-var sensors = [];
-var data= [];
+export var pause = false;
 
+
+var sensors = [];
+export var data= [];
+
+export var constants = {
+  wsUri: 'ws://192.168.4.1/ws'
+}
 
 export function init() {
   sensors = [
@@ -20,11 +26,16 @@ export function init() {
   ];
 };
 
+export function addToData(newValues){
+  data = [].concat(data,newValues);
 
-export function updateData(){
-  data.push({1:getRandomValue(), 2:getRandomValue()});
+  console.log("data counter: ", data.length);
 }
 
+
+export function clearData(){
+  data = [];
+}
 
 export function getData() {
   return data;
@@ -35,8 +46,6 @@ export function getSensorsList() {
 };
 
 
-function getRandomValue() {
-  let min = 0;
-  let max = 512;
-  return Math.random() * (max - min) + min;
-}
+export function togglePause() {
+  pause = !pause;
+};
