@@ -1,75 +1,69 @@
 <template>
-<div class="layout">
-
-  <div id="graph"></div>
-
-  <div class="layout">
-    <b-button @click="clearData()">
-      очистить
-    </b-button>
-
-    <b-button @click="pause()">
-      пауза
-    </b-button>
-  </div>
-
   <div class="layout">
 
-  </div>
+    <div id="graph"></div>
 
-</div>
+    <div class="layout">
+      <b-button @click="clearData()">
+        очистить
+      </b-button>
+
+      <b-button @click="pause()">
+        пауза
+      </b-button>
+    </div>
+
+    <div class="layout">
+
+    </div>
+
+  </div>
 </template>
 
 <script>
-var API = require('../api/api.js');
-import Dygraph from 'dygraphs';
+  var API = require('../api/api.js');
 
-var g;
+  const plot = require('../applicationPlot/applicationPlot');
 
-function mounted() {
+  let intervalPlotUpdate;
 
-  var data = [
-    [0, 0]
-  ];
+  function mounted() {
 
-  g = new Dygraph(
-    document.getElementById("graph"), data, {
-      drawPoints: false
-    });
-}
+    plot.createPlot();
 
-function created() {
-  console.log('Main created');
+    // intervalPlotUpdate = setInterval(function () {
+    //   applicationPlot.updatePlot();
+    // }, 100);
+  }
 
-  window.intervalId = setInterval(function() {
-    let plotData = API.getData()
-    if (plotData && plotData.length > 0)
-      g.updateOptions({
-        'file': plotData
-      });
-  }, 500);
+  function created() {
+    console.log('Main created');
+  }
+
+  function destroyed() {
+    console.log('Main destroyed');
+    clearInterval(intervalPlotUpdate);
+  }
 
 
-}
-
-
-export default {
-  name: 'Main',
-  mounted: mounted,
-  created: created,
-  methods: {
-    clearData: function() {
-      API.clearData();
-    },
-    pause: () => {
-      API.togglePause();
+  export default {
+    name: 'Main',
+    mounted: mounted,
+    created: created,
+    destroyed: destroyed,
+    methods: {
+      clearData: function () {
+        API.clearData();
+      },
+      pause: () => {
+        API.togglePause();
+      }
     }
   }
-}
 </script>
 
 <style>
-.layout {
-  margin: 10px;
-}
+  .layout {
+    margin: 10px;
+  }
 </style>

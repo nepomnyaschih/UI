@@ -1,51 +1,50 @@
+const plot = require('../applicationPlot/applicationPlot');
+
 
 export var pause = false;
 
-
-var sensors = [];
-export var data= [];
+export var data = {};
 
 export var constants = {
-  wsUri: 'ws://192.168.4.1/ws'
-}
-
-export function init() {
-  sensors = [
-    {
-      device:0,
-      id:0,
-      port: 2,
-      name: 'Первый датчик'
-    },
-    {
-      device:0,
-      id:1,
-      port: 3,
-      name: 'Второй датчик'
-    }
-  ];
+  wsUri: 'ws://192.168.4.1/ws',
+  plotRange: 20*1000
 };
 
-export function addToData(newValues){
-  data = [].concat(data,newValues);
+export function init() {
 
-  console.log("data counter: ", data.length);
+}
+
+export function addToData(newData) {
+  // data = [].concat(data, newValues);
+
+  // let sensors = Object.keys(newData);
+  //
+  // sensors.forEach((sensorId) => {
+  //
+  //   if (!data.hasOwnProperty(sensorId)) {
+  //     data[sensorId] = {
+  //       port: newData[sensorId].port,
+  //       data: []
+  //     };
+  //   }
+  //
+  //   let sensorData = data[sensorId].data;
+  //   sensorData = [].concat(sensorData, newData[sensorId].data);
+  //   data[sensorId].data = sensorData;
+  // });
+
+  if (!pause) plot.updatePlot(newData);
 }
 
 
-export function clearData(){
+export function clearData() {
   data = [];
 }
 
 export function getData() {
   return data;
-};
-
-export function getSensorsList() {
-  return sensors;
-};
-
+}
 
 export function togglePause() {
   pause = !pause;
-};
+}
