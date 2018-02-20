@@ -32,59 +32,34 @@ const webpackConfig = merge(baseWebpackConfig, {
       'process.env': env
     }),
 
-
-    new UglifyJsPlugin({
-      test: /\.js($|\?)/i
-    }),
-
-    new webpack.optimize.AggressiveSplittingPlugin({
-      minSize: 0,
-      maxSize: 1024 * 1024
-    }),
-
-    // extract css into its own file
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].css')
     }),
-    // Compress extracted CSS. We are using this plugin so that possible
-    // duplicated CSS from different components can be deduped.
-    new OptimizeCSSPlugin({
-      cssProcessorOptions: {
-        safe: true
+
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      comments: false,
+      compress: {
+        sequences     : true,
+        booleans      : true,
+        loops         : true,
+        unused      : true,
+        warnings    : false,
+        drop_console: true,
+        unsafe      : true
       }
     }),
-    // generate dist index.html with correct asset hash for caching.
-    // you can customize output by editing /index.html
-    // see https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: config.build.index,
-      template: 'index.html',
-      inject: true,
-      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency'
-    }),
-    // keep module.id stable when vender modules does not change
-    // new webpack.HashedModuleIdsPlugin(),
-    // split vendor js into its own file
+
+    new webpack.optimize.OccurrenceOrderPlugin(),
+
+
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: function (module) {
-        // any required modules inside node_modules are extracted to vendor
-        return (
-          module.resource &&
-          /\.js$/.test(module.resource) &&
-          module.resource.indexOf(
-            path.join(__dirname, '../node_modules')
-          ) === 0
-        )
-      }
+      children: true,
+      async: true,
     }),
-    // extract webpack runtime and module manifest to its own file in order to
-    // prevent vendor hash from being updated whenever app bundle is updated
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'manifest',
-    //   chunks: ['vendor']
-    // }),
+
+    new webpack.optimize.DedupePlugin(),
+
     // copy custom static assets
     new CopyWebpackPlugin([
       {
