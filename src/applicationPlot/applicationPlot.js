@@ -14,6 +14,12 @@ export function createPlot() {
       y: [],
       mode: 'lines',
       line: {color: '#f66ba6'}
+    },
+    {
+      x: [],
+      y: [],
+      mode: 'lines',
+      line: {color: '#78f65a'}
     }];
 
   Plotly.plot('graph', data);
