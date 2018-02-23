@@ -7,22 +7,47 @@ export function createPlot() {
       x: [],
       y: [],
       mode: 'lines',
+      name: 'sensor 1',
       line: {color: '#80CAF6'}
     },
     {
       x: [],
       y: [],
       mode: 'lines',
+      name: 'sensor 2',
       line: {color: '#f66ba6'}
     },
     {
       x: [],
       y: [],
       mode: 'lines',
+      name: 'sensor 3',
       line: {color: '#78f65a'}
-    }];
+    },
+    {
+      x: [],
+      y: [],
+      yaxis: 'y2',
+      mode: 'lines',
+      name: 'sum',
+      line: {color: '#8f8c8e'}
+    }
+    ];
 
-  Plotly.plot('graph', data);
+
+  var layout = {
+    // title: 'Double Y Axis Example',
+    yaxis: {title: 'Датчики'},
+    yaxis2: {
+      title: 'Сумма',
+      titlefont: {color: '#8f8c8e'},
+      tickfont: {color: '#8f8c8e'},
+      overlaying: 'y',
+      side: 'right'
+    }
+  };
+
+  Plotly.plot('graph', data, layout);
 }
 
 export function updatePlot(data) {
