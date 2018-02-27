@@ -32,14 +32,16 @@ export function createPlot() {
       name: 'sum',
       line: {color: '#8f8c8e'}
     }
-    ];
-
+  ];
 
   var layout = {
-    // title: 'Double Y Axis Example',
-    yaxis: {title: 'Датчики'},
+    yaxis: {
+      title: 'Датчики',
+      range: [0, 4096]
+    },
     yaxis2: {
       title: 'Сумма',
+      range: [0, data.length * 4096],
       titlefont: {color: '#8f8c8e'},
       tickfont: {color: '#8f8c8e'},
       overlaying: 'y',
@@ -58,7 +60,7 @@ export function updatePlot(data) {
 
     let convertedData = convertToPlotData(data[sensorId].data);
 
-    let maxTime = Math.max.apply(null,convertedData.x);
+    let maxTime = Math.max.apply(null, convertedData.x);
 
     let olderTime = maxTime - API.constants.plotRange;
     let futureTime = maxTime;

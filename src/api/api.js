@@ -7,7 +7,7 @@ export var data = {};
 
 export var constants = {
   wsUri: 'ws://192.168.4.1/ws',
-  plotRange: 20*1000
+  plotRange: 20*1000 //x axis range
 };
 
 export function init() {
